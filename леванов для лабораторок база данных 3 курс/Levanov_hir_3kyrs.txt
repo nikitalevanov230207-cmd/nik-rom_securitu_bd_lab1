@@ -1,0 +1,573 @@
+№1:
+int fibonacci(int n) {
+BB1:if (n <= 0) goto BB2;
+	else goto BB3;
+BB2:return 0;
+BB3: if (n == 1) gotoBB4;
+	else goto BB5;
+BB4:return 1;
+BB5:a=0;
+    b=1;
+    i=2; goto BB6;
+BB6:if  (i <= n) goto BB7; 
+	else goto BB8;
+BB7:t = a + b; a = b; b = t; i = i + 1; goto BB6;
+	else goto BB8;
+BB8:return b;
+}
+
+№2
+int factorial(int n) {
+BB1:if (n < 0) goto BB2;
+	else goto BB3;
+BB2:return -1;
+BB3: r = 1; i = 2; goto BB4;
+BB4:if (i <= n) goto BB5;
+	else goto BB6;
+BB5: r = r * i; i = i + 1; goto BB4;
+BB6:return r;
+}
+
+№3
+int gcd(int a, int b) {
+BB1:if (a < 0) goto BB2;
+	else goto BB3;
+BB2:a = -a;
+BB3:if (b < 0) goto BB4;
+	else goto BB5;
+BB4:b = -b;
+BB5:if (b != 0) goto BB6;
+	else goto BB7;
+BB6:int t = b; b = a % b; a = t; goto BB5;
+BB7:return a;
+}
+
+
+№4
+int lcm(int a, int b) {
+BB1: tmp1 = a == 0 ; tmp2 = b == 0 
+	if (tmp1 || tmp2)goto BB2;
+	else goto BB3;
+BB2:return 0;
+BB3: if (a < 0) goto BB4;
+	else goto BB5;
+BB4:a = -a;
+BB5:if (b < 0) goto BB6;
+	else goto BB7;
+BB6:b = -b;
+BB7: x = a; y = b; goto BB8;
+BB8:if (y != 0) goto BB9;
+	else goto BB10;
+BB9:int t = y; y = x % y; x = t;
+BB10: tmp1 = (a / x) ;tmp2 = tmp1 * b; return tmp2;
+}
+
+
+
+
+
+№5
+int is_prime(int n){
+
+BB1: if (n < 2) goto BB2;
+    else goto BB3;
+BB2: return 0;
+BB3: if ( n == 2) goto BB4;
+    else goto BB5;
+BB4: return 1;
+BB5: tmp = n % 2;
+    if (tmp == 0) goto BB6;
+    else goto BB7;
+BB6: return 0;
+BB7: i = 3;
+    tmp1 =  i * i;
+    if (tmp1 <= n ) goto BB8;
+       else goto BB11; 
+BB8: tmp2 = n % i;
+    if (tmp2 == 0) goto BB9;
+        else goto BB10;
+BB9: return 0;
+
+BB10:  i = i + 2;
+    if(tmp1 <= n) goto BB8;
+        else goto BB11;
+BB11: return 1;
+
+}
+
+№6
+int sum_of_divisors(int n) {
+BB1:  if (n <= 0) goto BB2;
+	else goto BB3;
+BB2:return 0;
+BB3:int s = 0; int i = 1; goto BB4;
+BB4: if tmp = i * i;
+	(tmp <= n );
+	goto BB5;
+	else goto BB10;
+BB5: if tmp1=n % i;
+	(tmp1==0) goto BB6;
+		else goto BB10;
+BB6: s = s + i;
+BB7: if tmp2 = n / i;
+	(i != tmp2) goto BB8;
+		else goto BB9;
+BB8: c0 = n / i; c1 = s + c0; 
+	goto BB9;
+BB9:i = i +  goto BB4;
+BB10:return s;
+}
+
+№7
+int is_perfect(int n) {
+
+BB1: if (n <= 1) goto BB2;
+    else goto BB3;
+BB2: return 0;
+BB3: s = 1;
+    i = 2;
+    tmp = i * i
+    if (tmp <= n) goto BB4;
+        else goto BB9;
+BB4: tmp1 = n % i;
+    if (tmp1 == 0) goto BB5;
+        else goto BB8;
+BB5: s = s + i;
+    tmp2 = n / i;
+    if (i != tmp2) goto BB6;
+        else goto BB7:
+BB6: tmp3 = n / i; 
+    s = s + tmp3;
+    goto BB7;
+BB7: i = i + 1;
+    tmp4 = i * i
+    if (tmp4 <= n) goto BB4;
+        else goto BB8;
+BB8: if (s == n) goto BB9;
+    else goto BB2;
+BB9: return 1;
+}
+
+
+№8
+int digit_sum(int n) {
+BB1: if(n < 0) goto BB2;
+    else goto BB3;
+BB2: n = -n; goto BB3;
+BB3: s = 0;
+    if(n > 0) goto BB4;
+        else goto BB5;
+BB4: tmp = n % 10;
+    s = s + tmp;
+    n = n / 10;
+    if(n > 0) goto BB4;
+        else goto BB5;
+BB5: return s;
+}
+
+№9
+int reverse_number(int n) {
+BB1: sign = 1;
+    if (n < 0) goto BB2;
+        else goto BB3;
+BB2: sign = -1;
+    n = -n;
+    goto BB3;
+BB3: r = 0;
+    if (n > 0) goto BB4;
+        else BB5;
+BB4: tmp = r * 10;
+    tmp1 = n % 10;
+    r = tmp + tmp1;
+    n = n / 10;
+    if (n > 0) goto BB4;
+        else BB5;
+BB5: tmp2 = r * sign;
+    return tmp2;
+
+}
+
+#10
+int is_palindrome_number(int n) {
+    if (n < 0) return 0;
+    int original = n;
+    int r = 0;
+    while (n > 0) {
+        r = r * 10 + n % 10;
+        n = n / 10;
+    }
+    if (r == original) return 1;
+    return 0;
+}
+
+№10
+int is_palindrome_number(int n) {
+BB1: if ( n < 0 ) goto BB2;
+         else goto BB3;
+BB2: return 0;
+BB3: original = n;
+         r = 0; goto BB4;
+BB4: if ( n > 0 ) goto BB5;
+         else goto BB6;
+BB5: tmp1 = r * 10;
+         tmp2 = n % 10;
+         r = tmp1 + tmp2;
+         n = n / 10; goto BB4;
+BB6: if ( r == original ) goto BB7;
+         else goto BB2;
+BB7: return 1;
+}
+
+#11
+int power(int base, int exp) {
+    if (exp < 0) return 0;
+    int r = 1;
+    int i = 0;
+    while (i < exp) {
+        r = r * base;
+        i = i + 1;
+    }
+    return r;
+}
+
+
+
+№11
+int power(int base, int exp){
+BB1: if (exp < 0) goto BB2;
+        else goto BB3;
+BB2: return 0;
+BB3: r = 1;
+    i = 0;
+    if (i < exp) goto BB4;
+        else goto BB5;
+BB4: r = r * base;
+    i = i + i;
+    if (i < exp) goto BB4;
+        else goto BB5;
+BB5: return r;
+
+}
+
+
+№12
+int fast_power(int base, int exp) {
+
+BB1: if (exp < 0) goto BB2;
+    else goto BB3;
+
+BB2: return 0;
+
+BB3: int r = 1;
+    int b = base;
+    int e = exp;
+    if (e > 0) goto BB4;
+    else goto BB5;
+
+BB4: tmp1 = e % 2;
+    if(tmp1 == 1) goto BB5;
+    else goto BB6;
+
+BB5:  b = b * b;
+    e = e / 2;
+    if(tmp1 == 1) goto BB5;
+    else goto BB6;
+
+BB6: return r;
+
+}
+
+№13
+int integer_sqrt(int n){
+
+BB1: if (n < 0) goto BB2;
+        else goto BB3;
+
+BB2: return -1;
+
+BB3: if (n == 0) goto BB4;
+        else goto BB5;
+
+BB4: return 0;
+
+BB5: x = n;
+    tmp = x + 1;
+    y = tmp / 2;
+    if (y < x) goto BB6;
+        else goto BB7;
+
+BB6: x = y;
+    tmp1 = n / x;
+    tmp2 = x + tmp1;
+    y = tmp2 / 2
+    if (y < x) goto BB6;
+        else goto BB7;
+
+BB7: return x;
+
+}
+
+№14
+int count_primes_up_to(int n) {
+
+BB1: if (n < 2) goto BB2;
+    else goto BB3;
+
+BB2: return 0;
+
+BB3: int count = 1;
+    int d = 3;
+    tmp1 = d * d;
+    if (tmp <= candidate) goto BB4;
+        else goto BB5:
+
+BB4:tmp1 = candidate % d;   
+    if (tmp1 == 0) goto BB5;
+    else goto BB6;
+
+BB5: is_p = 0
+    goto BB6;
+
+BB6: d = d + 2;
+    if (tmp1 == 0) goto BB7;
+    else goto BB6;
+
+BB7: if (is_p == 1) goto BB8;
+    else goto BB7;
+
+BB8: count = count + 1;
+
+BB9: candidate = candidate + 2;
+
+BB10: return count;
+
+
+
+}
+
+
+№15
+int nth_prime(int n) {
+BB1: if (n <= 0) goto BB2;
+     else goto BB3;
+
+BB2: return -1;
+
+BB3: if (n == 1) goto BB4;
+     else goto BB5;
+
+BB4: return 2;
+
+BB5: count = 1;
+     candidate = 3;
+
+BB6: is_p = 1;
+     d = 3;
+
+BB7: tmp = d * d;
+     if (tmp <= candidate) goto BB8;
+     else goto BB11;
+
+BB8: tmp = candidate % d;
+     if (tmp == 0) goto BB9;
+     else goto BB10;
+
+BB9: is_p = 0;
+     goto BB11;
+
+BB10: d = d + 2;
+      goto BB7;
+
+BB11: if (is_p == 1) goto BB12;
+      else goto BB14;
+
+BB12: count = count + 1;
+      if (count == n) goto BB13;
+      else goto BB14;
+
+BB13: return candidate;
+
+BB14: candidate = candidate + 2;
+      goto BB6;
+}
+
+№16
+int collatz_steps(int n) {
+BB1: if (n <= 0) goto BB2;
+     else goto BB3;
+
+BB2: return -1;
+
+BB3: steps = 0;goto BB4;
+     else goto BB8;
+
+BB4: if (n != 1) goto BB5;
+     else goto BB9;
+
+BB5: tmp = n % 2;
+     if (tmp == 0) goto BB6;
+     else goto BB7;
+
+BB6: n = n / 2;
+     goto BB8;
+
+BB7: tmp = 3 * n;
+     n = tmp + 1;
+
+BB8: steps = steps + 1;
+     goto BB4;
+
+BB9: return steps;
+}
+
+№17
+int collatz_max(int n) {
+BB1: if (n <= 0) goto BB2;
+     else goto BB3;
+
+BB2: return -1;
+
+BB3: m = n;
+
+BB4: if (n != 1) goto BB5;
+     else goto BB10;
+
+BB5: if (n > m) goto BB6;
+     else goto BB7;
+
+BB6: m = n;
+     goto BB7;
+
+BB7: tmp = n % 2;
+     if (tmp == 0) goto BB8;
+     else goto BB9;
+
+BB8: n = n / 2;
+     goto BB4;
+
+BB9: tmp = 3 * n;
+     n = tmp + 1;
+     goto BB4;
+
+BB10: return m;
+}
+
+
+№18
+int happy_number(int n) {
+BB1: if(n <= 0) goto BB2; else goto BB3;
+BB2: return 0;
+BB3: slow = n; fast = n;
+BB4: s1 = 0; t = slow; 
+    if (t > 0) goto BB5; 
+    else goto BB6;
+BB5: d = t % 10; 
+    tmp = d * d; 
+    s1 = s1 + tmp;
+    t= t / 10;
+    if(t > 0) goto BB5;
+    else goto BB6;
+BB6: slow = s1;
+    s2 = 0; t = fast; k = 0;
+    if(k < 2) goto BB7;
+    else goto BB10;
+BB7: s = 0;
+    if(t > 0) goto BB8;
+    else goto BB9;
+BB8: d = t % 10;
+    tmp = d * d;
+    s = s + tmp;
+    t = t / 10;
+    if(t > 0) goto BB8;
+    else goto BB9;
+BB9: t = s;
+    k = k + 1;
+    if(k < 2) goto BB7;
+    else goto BB10;
+BB10: fast = t;
+    if(slow == 1) goto BB11;
+    else goto BB12;
+BB11: return 1;
+BB12: if(slow == fast) goto BB2;
+    else goto BB4;
+}
+
+
+
+№19
+int armstrong_check(int n) {
+BB1: if (n < 100) goto BB2;
+     else goto BB3;
+
+BB2: return 0;
+
+BB3: if (n > 999) goto BB2;
+     else goto BB4;
+
+BB4: t = n;
+     s = 0;
+
+BB5: if (t > 0) goto BB6;
+     else goto BB9;
+
+BB6: tmp = t % 10;
+     d = tmp;
+     tmp2 = d * d;
+     tmp3 = tmp2 * d;
+     s = s + tmp3;
+
+BB7: t = t / 10;
+     goto BB5;
+
+BB9: if (s == n) goto BB10;
+     else goto BB11;
+
+BB10: return 1;
+
+BB11: return 0;
+}
+
+№20
+int sort_three(int a, int b, int c) {
+BB1: if (a > b) goto BB2;
+     else goto BB3;
+
+BB2: t = a;
+     a = b;
+     b = t;
+     goto BB3;
+
+BB3: if (b > c) goto BB4;
+     else goto BB5;
+
+BB4: t = b;
+     b = c;
+     c = t;
+     goto BB5;
+
+BB5: if (a > b) goto BB6;
+     else goto BB7;
+
+BB6: t = a;
+     a = b;
+     b = t;
+     goto BB7;
+
+BB7: result = 0;
+     tmp = a * 100;
+     result = result + tmp;
+     tmp2 = b * 10;
+     result = result + tmp2;
+     result = result + c;
+     return
+
+
+
+
+
+
+
+
+
+
+

