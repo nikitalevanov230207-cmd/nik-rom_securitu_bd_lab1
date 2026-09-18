@@ -1,0 +1,137 @@
+USE School;
+GO
+
+=========================================
+1. Таблица Classes (Классы)
+=========================================
+CREATE TABLE Classes (
+    ClassID INT PRIMARY KEY IDENTITY(1, 1),  -- "классы" (PK)
+    ClassNumber VARCHAR(10) NOT NULL,        -- "номер класса"
+    Capacity INT NOT NULL                    -- "вместимость"
+) ON Bublioteka;
+GO
+
+INSERT INTO Classes (ClassNumber, Capacity) VALUES
+('5А', 25),
+('5Б', 28),
+('6А', 24),
+('6Б', 30),
+('7А', 26),
+('7Б', 22),
+('8А', 29),
+('8Б', 27),
+('9А', 25),
+('9Б', 23);
+GO
+
+=========================================
+2. Таблица Students (Ученики)
+=========================================
+CREATE TABLE Students (
+    StudentID INT PRIMARY KEY IDENTITY(1, 1), -- "ученик" (PK)
+    FullName VARCHAR(100) NOT NULL,           -- "фио"
+    BirthDate DATETIME NOT NULL,              -- "др"
+    Gender VARCHAR(10) NOT NULL,              -- "пол"
+    ClassID INT NOT NULL,                     -- "класс" (FK)
+    FOREIGN KEY (ClassID) REFERENCES Classes(ClassID)
+) ON Bublioteka;
+GO
+
+INSERT INTO Students (FullName, BirthDate, Gender, ClassID) VALUES
+('Иванов Иван Иванович',        '2013-05-14', 'М', 1),
+('Петрова Анна Сергеевна',      '2013-08-22', 'Ж', 1),
+('Сидоров Петр Алексеевич',     '2013-01-30', 'М', 2),
+('Кузнецова Мария Дмитриевна',  '2013-11-05', 'Ж', 2),
+('Смирнов Алексей Олегович',    '2012-03-18', 'М', 3),
+('Волкова Екатерина Павловна',  '2012-07-09', 'Ж', 3),
+('Морозов Дмитрий Игоревич',    '2012-12-25', 'М', 4),
+('Новикова Ольга Викторовна',   '2012-04-11', 'Ж', 4),
+('Федоров Артем Романович',     '2011-06-02', 'М', 5),
+('Соколова Дарья Андреевна',    '2011-09-17', 'Ж', 5);
+GO
+
+=========================================
+3. Таблица Teachers (Учителя)
+=========================================
+CREATE TABLE Teachers (
+    TeacherID INT PRIMARY KEY IDENTITY(1, 1), -- "учитель" (PK)
+    FullName VARCHAR(100) NOT NULL,           -- "фио"
+    Gender VARCHAR(10) NOT NULL,              -- "пол"
+    Subject VARCHAR(100) NOT NULL             -- "предмет"
+) ON Bublioteka;
+GO
+
+INSERT INTO Teachers (FullName, Gender, Subject) VALUES
+('Орлова Наталья Петровна',     'Ж', 'Математика'),
+('Григорьев Сергей Иванович',   'М', 'Физика'),
+('Белова Ирина Александровна',  'Ж', 'Русский язык'),
+('Козлов Андрей Николаевич',    'М', 'История'),
+('Лебедева Татьяна Юрьевна',    'Ж', 'Английский язык'),
+('Никитин Владимир Сергеевич',  'М', 'Информатика'),
+('Егорова Светлана Ивановна',   'Ж', 'Химия'),
+('Павлов Михаил Олегович',      'М', 'Биология'),
+('Романова Елена Викторовна',   'Ж', 'География'),
+('Захаров Игорь Анатольевич',   'М', 'Физкультура');
+GO
+
+=========================================
+4. Таблица Schedule (Расписание)
+=========================================
+CREATE TABLE Schedule (
+    ScheduleID INT PRIMARY KEY IDENTITY(1, 1), -- "расписание" (PK)
+    ClassID INT NOT NULL,                      -- "id_класс" (FK)
+    TeacherID INT NOT NULL,                    -- "id_препод" (FK)
+    StartTime DATETIME NOT NULL,               -- "начало занятий"
+    FOREIGN KEY (ClassID) REFERENCES Classes(ClassID),
+    FOREIGN KEY (TeacherID) REFERENCES Teachers(TeacherID)
+) ON Bublioteka;
+GO
+
+INSERT INTO Schedule (ClassID, TeacherID, StartTime) VALUES
+(1, 1, '2024-09-02 08:30:00'),
+(1, 3, '2024-09-02 09:25:00'),
+(2, 2, '2024-09-02 08:30:00'),
+(2, 5, '2024-09-02 09:25:00'),
+(3, 4, '2024-09-02 10:20:00'),
+(3, 6, '2024-09-02 11:15:00'),
+(4, 7, '2024-09-02 08:30:00'),
+(4, 8, '2024-09-02 09:25:00'),
+(5, 9, '2024-09-02 10:20:00'),
+(5, 10, '2024-09-02 11:15:00');
+GO
+
+=========================================
+5. Таблица Diary (Запись в дневник)
+=========================================
+CREATE TABLE Diary (
+    RecordID INT PRIMARY KEY IDENTITY(1, 1),   -- "записи" (PK)
+    Grade INT NOT NULL,                        -- "оценка"
+    StudentID INT NOT NULL,                    -- "id_ученика" (FK)
+    TeacherID INT NOT NULL,                    -- "id_препод" (FK)
+    FOREIGN KEY (StudentID) REFERENCES Students(StudentID),
+    FOREIGN KEY (TeacherID) REFERENCES Teachers(TeacherID)
+) ON Bublioteka;
+GO
+
+INSERT INTO Diary (Grade, StudentID, TeacherID) VALUES
+(5, 1, 1),
+(4, 2, 3),
+(5, 3, 2),
+(3, 4, 5),
+(4, 5, 4),
+(5, 6, 6),
+(2, 7, 7),
+(5, 8, 8),
+(4, 9, 9),
+(5, 10, 10);
+GO
+
+=========================================
+Проверка результатов
+=========================================
+SELECT * FROM Classes;
+SELECT * FROM Students;
+SELECT * FROM Teachers;
+SELECT * FROM Schedule;
+SELECT * FROM Diary;
+GO
