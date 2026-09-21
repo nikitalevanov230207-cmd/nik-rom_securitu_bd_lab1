@@ -1,0 +1,22 @@
+USE School;
+GO
+
+CREATE TABLE classi_1 (
+    ClassID INT PRIMARY KEY IDENTITY(1, 1),  -- "классы" (PK)
+    ClassNumber VARCHAR(10) NOT NULL,        -- "номер класса"
+    Capacity INT NOT NULL                    -- "вместимость"
+) ON Bublioteka;
+GO
+
+INSERT INTO classi_1 (ClassNumber, Capacity) VALUES
+('5А', 25),
+('5Б', 28),
+('6А', 24),
+('6Б', 30),
+('7А', 26),
+('7Б', 22),
+('8А', 29),
+('8Б', 27),
+('9А', 25),
+('9Б', 23);
+GO

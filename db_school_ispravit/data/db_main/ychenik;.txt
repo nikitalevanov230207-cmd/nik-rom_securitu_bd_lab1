@@ -1,0 +1,25 @@
+USE School;
+GO
+
+CREATE TABLE ychenik_0 (
+    StudentID INT PRIMARY KEY IDENTITY(1, 1), -- "ученик" (PK)
+    FullName VARCHAR(100) NOT NULL,           -- "фио"
+    BirthDate DATETIME NOT NULL,              -- "др"
+    Gender VARCHAR(10) NOT NULL,              -- "пол"
+    ClassID INT NOT NULL,                     -- "класс" (FK)
+    FOREIGN KEY (ClassID) REFERENCES Classes(ClassID)
+) ON Bublioteka;
+GO
+
+INSERT INTO ychenik_0 (FullName, BirthDate, Gender, ClassID) VALUES
+('Иванов Иван Иванович',        '2013-05-14', 'М', 1),
+('Петрова Анна Сергеевна',      '2013-08-22', 'Ж', 1),
+('Сидоров Петр Алексеевич',     '2013-01-30', 'М', 2),
+('Кузнецова Мария Дмитриевна',  '2013-11-05', 'Ж', 2),
+('Смирнов Алексей Олегович',    '2012-03-18', 'М', 3),
+('Волкова Екатерина Павловна',  '2012-07-09', 'Ж', 3),
+('Морозов Дмитрий Игоревич',    '2012-12-25', 'М', 4),
+('Новикова Ольга Викторовна',   '2012-04-11', 'Ж', 4),
+('Федоров Артем Романович',     '2011-06-02', 'М', 5),
+('Соколова Дарья Андреевна',    '2011-09-17', 'Ж', 5);
+GO

@@ -1,0 +1,11 @@
+USE School;
+GO
+
+
+
+SELECT * FROM classi_1;
+SELECT * FROM ychenik_0;
+SELECT * FROM ychitelya_2;
+SELECT * FROM raspisanie_Grades2;
+SELECT * FROM zapis_v_dnev_Grades1;
+GO

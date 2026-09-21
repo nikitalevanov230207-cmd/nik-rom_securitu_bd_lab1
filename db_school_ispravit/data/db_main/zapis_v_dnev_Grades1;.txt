@@ -1,0 +1,26 @@
+USE School;
+GO
+
+
+CREATE TABLE zapis_v_dnev_Grades1 (
+    RecordID INT PRIMARY KEY IDENTITY(1, 1),   -- "записи" (PK)
+    Grade INT NOT NULL,                        -- "оценка"
+    StudentID INT NOT NULL,                    -- "id_ученика" (FK)
+    TeacherID INT NOT NULL,                    -- "id_препод" (FK)
+    FOREIGN KEY (StudentID) REFERENCES Students(StudentID),
+    FOREIGN KEY (TeacherID) REFERENCES Teachers(TeacherID)
+) ON Bublioteka;
+GO
+
+INSERT INTO zapis_v_dnev_Grades1 (Grade, StudentID, TeacherID) VALUES
+(5, 1, 1),
+(4, 2, 3),
+(5, 3, 2),
+(3, 4, 5),
+(4, 5, 4),
+(5, 6, 6),
+(2, 7, 7),
+(5, 8, 8),
+(4, 9, 9),
+(5, 10, 10);
+GO
