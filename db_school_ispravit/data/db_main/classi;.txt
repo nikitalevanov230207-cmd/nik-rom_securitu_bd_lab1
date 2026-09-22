@@ -5,7 +5,7 @@ CREATE TABLE classi_1 (
     ClassID INT PRIMARY KEY IDENTITY(1, 1),  -- "классы" (PK)
     ClassNumber VARCHAR(10) NOT NULL,        -- "номер класса"
     Capacity INT NOT NULL                    -- "вместимость"
-) ON Bublioteka;
+) ON School;
 GO
 
 INSERT INTO classi_1 (ClassNumber, Capacity) VALUES
