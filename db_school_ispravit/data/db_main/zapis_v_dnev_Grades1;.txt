@@ -9,7 +9,7 @@ CREATE TABLE zapis_v_dnev_Grades1 (
     TeacherID INT NOT NULL,                    -- "id_препод" (FK)
     FOREIGN KEY (StudentID) REFERENCES Students(StudentID),
     FOREIGN KEY (TeacherID) REFERENCES Teachers(TeacherID)
-) ON Bublioteka;
+) ON School;
 GO
 
 INSERT INTO zapis_v_dnev_Grades1 (Grade, StudentID, TeacherID) VALUES
