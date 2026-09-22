@@ -8,7 +8,7 @@ CREATE TABLE raspisanie_Grades2 (
     StartTime DATETIME NOT NULL,               -- "начало занятий"
     FOREIGN KEY (ClassID) REFERENCES Classes(ClassID),
     FOREIGN KEY (TeacherID) REFERENCES Teachers(TeacherID)
-) ON Bublioteka;
+) ON School;
 GO
 
 INSERT INTO raspisanie_Grades2 (ClassID, TeacherID, StartTime) VALUES
