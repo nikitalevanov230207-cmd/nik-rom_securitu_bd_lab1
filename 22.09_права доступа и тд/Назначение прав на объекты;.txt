@@ -1,0 +1,45 @@
+USE SchoolDB;
+GO
+
+-- Назначение прав на объекты
+
+-- AdminRole — полный доступ к созданным объектам
+GRANT EXECUTE ON dbo.usp_InsertGrade      TO AdminRole;
+GRANT EXECUTE ON dbo.usp_UpdateGrade      TO AdminRole;
+GRANT EXECUTE ON dbo.usp_UpdateClassMember TO AdminRole;
+GRANT EXECUTE ON dbo.usp_InsertRemark      TO AdminRole;
+
+GRANT SELECT ON dbo.vw_TeacherGrades       TO AdminRole;
+GRANT SELECT ON dbo.vw_TeacherSchedule     TO AdminRole;
+GRANT SELECT ON dbo.vw_ParentGrades        TO AdminRole;
+GRANT SELECT ON dbo.vw_ParentAttendance    TO AdminRole;
+GRANT SELECT ON dbo.vw_ClassTeacherMembers  TO AdminRole;
+GO
+
+-- TeacherRole: INSERT/UPDATE оценок только по своим предметам, SELECT расписания
+GRANT SELECT ON dbo.vw_TeacherSchedule  TO TeacherRole;
+GRANT SELECT ON dbo.vw_TeacherGrades     TO TeacherRole;
+GRANT EXECUTE ON dbo.usp_InsertGrade     TO TeacherRole;
+GRANT EXECUTE ON dbo.usp_UpdateGrade     TO TeacherRole;
+GO
+
+-- ParentRole: SELECT на оценки и посещаемость только своего ребёнка
+GRANT SELECT ON dbo.vw_ParentGrades      TO ParentRole;
+GRANT SELECT ON dbo.vw_ParentAttendance  TO ParentRole;
+GO
+
+-- ClassTeacherRole: UPDATE состава класса, INSERT замечаний
+GRANT SELECT ON dbo.vw_ClassTeacherMembers  TO ClassTeacherRole;
+GRANT EXECUTE ON dbo.usp_UpdateClassMember  TO ClassTeacherRole;
+GRANT EXECUTE ON dbo.usp_InsertRemark       TO ClassTeacherRole;
+
+-- Запрет (DENY) на ввод оценок по чужим предметам для ClassTeacher
+DENY INSERT, UPDATE ON dbo.Grades            TO ClassTeacherRole;
+GO
+
+
+ALTER ROLE AdminRole       ADD MEMBER AdminUser;
+ALTER ROLE TeacherRole      ADD MEMBER TeacherUser;
+ALTER ROLE ParentRole       ADD MEMBER ParentUser;
+ALTER ROLE ClassTeacherRole ADD MEMBER ClassTeacherUser;
+GO

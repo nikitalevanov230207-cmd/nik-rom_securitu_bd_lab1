@@ -1,0 +1,120 @@
+USE SchoolDB;
+GO
+
+
+
+-- Хранимые процедуры с бизнес-логикой и проверками
+
+-- Teacher: ввод оценки только по своему предмету
+CREATE PROCEDURE dbo.usp_InsertGrade
+    @StudentID  INT,
+    @SubjectID  INT,
+    @GradeValue TINYINT,
+    @GradeDate  DATE
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @TeacherID INT;
+    SELECT @TeacherID = TeacherID FROM dbo.Teachers WHERE LoginName = SUSER_NAME();
+
+    IF @TeacherID IS NULL
+        THROW 50001, 'Не удалось определить преподавателя для текущего пользователя.', 1;
+
+    IF NOT EXISTS (
+        SELECT 1 FROM dbo.TeacherSubjects
+        WHERE TeacherID = @TeacherID AND SubjectID = @SubjectID
+    )
+        THROW 50001, 'Вы не можете выставлять оценки по этому предмету.', 1;
+
+    INSERT INTO dbo.Grades (StudentID, SubjectID, GradeValue, GradeDate, TeacherID)
+    VALUES (@StudentID, @SubjectID, @GradeValue, @GradeDate, @TeacherID);
+END;
+GO
+
+-- Teacher: изменение оценки только по своему предмету
+CREATE PROCEDURE dbo.usp_UpdateGrade
+    @GradeID    INT,
+    @GradeValue TINYINT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @TeacherID INT;
+    SELECT @TeacherID = TeacherID FROM dbo.Teachers WHERE LoginName = SUSER_NAME();
+
+    IF @TeacherID IS NULL
+        THROW 50002, 'Не удалось определить преподавателя для текущего пользователя.', 1;
+
+    IF NOT EXISTS (
+        SELECT 1
+        FROM dbo.Grades g
+        INNER JOIN dbo.TeacherSubjects ts
+            ON g.SubjectID = ts.SubjectID
+        WHERE g.GradeID = @GradeID
+          AND g.TeacherID = @TeacherID
+          AND ts.TeacherID = @TeacherID
+    )
+        THROW 50002, 'Вы можете изменять только свои оценки.', 1;
+
+    UPDATE dbo.Grades
+    SET GradeValue = @GradeValue
+    WHERE GradeID = @GradeID AND TeacherID = @TeacherID;
+END;
+GO
+
+-- ClassTeacher: обновление состава класса
+CREATE PROCEDURE dbo.usp_UpdateClassMember
+    @ClassMemberID  INT,
+    @StudentID      INT,
+    @EnrollmentDate DATE
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @ClassID INT;
+    SELECT @ClassID = ClassID FROM dbo.Classes WHERE ClassTeacherLogin = SUSER_NAME();
+
+    IF @ClassID IS NULL
+        THROW 50003, 'Текущий пользователь не назначен классным руководителем ни одного класса.', 1;
+
+    IF NOT EXISTS (
+        SELECT 1
+        FROM dbo.ClassMembers
+        WHERE ClassMemberID = @ClassMemberID AND ClassID = @ClassID
+    )
+        THROW 50003, 'Вы можете изменять состав только своего класса.', 1;
+
+    UPDATE dbo.ClassMembers
+    SET StudentID      = @StudentID,
+        EnrollmentDate = @EnrollmentDate
+    WHERE ClassMemberID = @ClassMemberID AND ClassID = @ClassID;
+END;
+GO
+
+-- ClassTeacher: добавление замечания
+CREATE PROCEDURE dbo.usp_InsertRemark
+    @StudentID  INT,
+    @RemarkText NVARCHAR(500),
+    @RemarkDate DATE
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @ClassID INT;
+    SELECT @ClassID = ClassID FROM dbo.Classes WHERE ClassTeacherLogin = SUSER_NAME();
+
+    IF @ClassID IS NULL
+        THROW 50004, 'Текущий пользователь не назначен классным руководителем ни одного класса.', 1;
+
+    IF NOT EXISTS (
+        SELECT 1
+        FROM dbo.ClassMembers cm
+        WHERE cm.StudentID = @StudentID AND cm.ClassID = @ClassID
+    )
+        THROW 50004, 'Ученик не относится к вашему классу.', 1;
+
+    INSERT INTO dbo.Remarks (StudentID, RemarkText, RemarkDate, AuthorLogin)
+    VALUES (@StudentID, @RemarkText, @RemarkDate, SUSER_NAME());
+END;
+GO

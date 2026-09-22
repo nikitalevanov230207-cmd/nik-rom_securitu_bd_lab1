@@ -1,0 +1,59 @@
+USE SchoolDB;
+GO
+
+-- Представления для построчного разграничения доступа
+
+-- Оценки только по предметам конкретного учителя
+CREATE VIEW dbo.vw_TeacherGrades
+AS
+SELECT g.GradeID, g.StudentID, g.SubjectID, g.GradeValue, g.GradeDate, g.TeacherID
+FROM dbo.Grades g
+INNER JOIN dbo.TeacherSubjects ts
+    ON g.SubjectID = ts.SubjectID
+   AND g.TeacherID = ts.TeacherID
+WHERE g.TeacherID = (
+    SELECT TeacherID FROM dbo.Teachers WHERE LoginName = SUSER_NAME()
+);
+GO
+
+-- Расписание для конкретного учителя
+CREATE VIEW dbo.vw_TeacherSchedule
+AS
+SELECT s.ScheduleID, s.ClassID, s.SubjectID, s.TeacherID,
+       s.DayOfWeek, s.LessonNumber, s.Room
+FROM dbo.Schedule s
+WHERE s.TeacherID = (
+    SELECT TeacherID FROM dbo.Teachers WHERE LoginName = SUSER_NAME()
+);
+GO
+
+-- Оценки только своего ребёнка (для родителя)
+CREATE VIEW dbo.vw_ParentGrades
+AS
+SELECT g.GradeID, g.StudentID, g.SubjectID, g.GradeValue, g.GradeDate
+FROM dbo.Grades g
+INNER JOIN dbo.Students s  ON g.StudentID = s.StudentID
+INNER JOIN dbo.Parents  p  ON s.StudentID = p.StudentID
+WHERE p.LoginName = SUSER_NAME();
+GO
+
+-- Посещаемость только своего ребёнка (для родителя)
+CREATE VIEW dbo.vw_ParentAttendance
+AS
+SELECT a.AttendanceID, a.StudentID, a.LessonDate, a.IsPresent, a.Reason
+FROM dbo.Attendance a
+INNER JOIN dbo.Students s ON a.StudentID = s.StudentID
+INNER JOIN dbo.Parents  p ON s.StudentID = p.StudentID
+WHERE p.LoginName = SUSER_NAME();
+GO
+
+-- Состав класса для классного руководителя
+CREATE VIEW dbo.vw_ClassTeacherMembers
+AS
+SELECT cm.ClassMemberID, cm.ClassID, cm.StudentID, cm.EnrollmentDate
+FROM dbo.ClassMembers cm
+WHERE cm.ClassID = (
+    SELECT ClassID FROM dbo.Classes WHERE ClassTeacherLogin = SUSER_NAME()
+);
+GO
+
