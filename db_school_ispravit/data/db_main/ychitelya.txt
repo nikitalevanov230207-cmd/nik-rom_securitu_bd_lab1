@@ -6,7 +6,7 @@ CREATE TABLE ychitelya_2 (
     FullName VARCHAR(100) NOT NULL,           -- "фио"
     Gender VARCHAR(10) NOT NULL,              -- "пол"
     Subject VARCHAR(100) NOT NULL             -- "предмет"
-) ON Bublioteka;
+) ON School;
 GO
 
 INSERT INTO ychitelya_2 (FullName, Gender, Subject) VALUES
