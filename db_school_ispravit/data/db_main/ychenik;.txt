@@ -8,7 +8,7 @@ CREATE TABLE ychenik_0 (
     Gender VARCHAR(10) NOT NULL,              -- "пол"
     ClassID INT NOT NULL,                     -- "класс" (FK)
     FOREIGN KEY (ClassID) REFERENCES Classes(ClassID)
-) ON Bublioteka;
+) ON School;
 GO
 
 INSERT INTO ychenik_0 (FullName, BirthDate, Gender, ClassID) VALUES
