@@ -1,0 +1,2 @@
+EXECUTE AS USER = 'AdminUser'
+SELECT TeacherID FROM ychitelya_2;
