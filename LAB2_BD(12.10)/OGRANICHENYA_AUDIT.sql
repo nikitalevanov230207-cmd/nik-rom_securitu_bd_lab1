@@ -1,0 +1,5 @@
+DENY SELECT, INSERT, UPDATE, DELETE ON dbo.Audit TO TeacherUser;
+DENY SELECT, INSERT, UPDATE, DELETE ON dbo.Audit TO ParentUser;
+DENY SELECT, INSERT, UPDATE, DELETE ON dbo.Audit TO ClassTeacherUser;
+
+GRANT SELECT ON dbo.Audit TO AdminUser;
