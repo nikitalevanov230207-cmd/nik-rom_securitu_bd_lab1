@@ -1,0 +1,3 @@
+C:\User\Student\SYSTEM_PROGRAMMING\EXAMPLES\NETWORKING\SocketWrapper\MessengerAloha\x64\Debug\MessengerAloha.vcxproj.AssemblyReference.cache
+C:\User\Student\SYSTEM_PROGRAMMING\EXAMPLES\NETWORKING\SocketWrapper\MessengerAloha\x64\Debug\MessengerAloha.ServerForm.resources
+C:\User\Student\SYSTEM_PROGRAMMING\EXAMPLES\NETWORKING\SocketWrapper\MessengerAloha\x64\Debug\MessengerAloha.vcxproj.GenerateResource.cache

@@ -1,0 +1,4 @@
+﻿  ServerForm.cpp
+C:\User\Student\SYSTEM_PROGRAMMING\EXAMPLES\NETWORKING\SocketWrapper\MessengerAloha\ServerForm.cpp(53,42): warning C4101: e: неиспользованная локальная переменная
+  Client.obj : обнаружен модуль MSIL; для MSIL последовательная компоновка отключена; выполняется полная компоновка
+  MessengerAloha.vcxproj -> C:\User\Student\SYSTEM_PROGRAMMING\EXAMPLES\NETWORKING\SocketWrapper\x64\Debug\AlohaServer.exe
